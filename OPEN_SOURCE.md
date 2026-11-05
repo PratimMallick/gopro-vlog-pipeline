@@ -2,7 +2,9 @@
 
 A local pipeline that turns a folder of GoPro clips into a YouTube-ready film: inventory, speech-to-text, an edit decision list, licensed music, burned-in subtitles, and a validated H.264 file. It was built for one trip and then opened up so a second day, or someone else's footage, can use the same code.
 
-The program does not decide the story. A person writes `editorial/edit_plan.json` (which clip, from when to when, and which cards). The pipeline checks that plan against the real files and renders it. Nothing here calls ChatGPT, Claude, or any other chat model. The only model is speech recognition, and you choose it in `config.toml` under `[transcription]`. The default is Whisper large-v3 running on an Apple GPU through MLX. Swap that setting for another Whisper build if you want. There is no switch that hands the cut to a chatbot.
+Two open-weight models run on this machine, both through MLX on an Apple GPU. Whisper, set under `[transcription]`, transcribes the clips. A second model, set under `[plan]`, reads those transcripts and writes `editorial/edit_plan.json`. The default plan model is Qwen2.5 7B Instruct at 4-bit, about 4 GB, from `mlx-community` on Hugging Face. The download is free. The project has no API key and does not call a paid chat service.
+
+The render does not call the model again. It checks the plan against the real files and plays that cut. Change the JSON and run the render again when you want a different film. `stage_e_plan.py` leaves an existing plan in place unless you pass `--force`.
 
 ## What stays private
 
@@ -26,7 +28,7 @@ cd pipeline
 ../.venv/bin/python stage_a_inventory.py
 ../.venv/bin/python stage_c_speech.py
 ../.venv/bin/python stage_f_music.py
-# write editorial/edit_plan.json, then:
+../.venv/bin/python stage_e_plan.py    # local model writes editorial/edit_plan.json
 ../.venv/bin/python stage_d_edl.py
 ../.venv/bin/python stage_g_render.py
 ../.venv/bin/python stage_i_validate.py
