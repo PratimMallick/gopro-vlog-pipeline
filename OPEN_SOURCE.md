@@ -1,6 +1,6 @@
-# GoPro travel-vlog editor
+# Local travel-vlog editor
 
-A local pipeline that turns a folder of GoPro clips into a YouTube-ready film: inventory, speech-to-text, an edit decision list, licensed music, burned-in subtitles, and a validated H.264 file. It was built for one trip and then opened up so a second day, or someone else's footage, can use the same code.
+A local pipeline that turns a folder of video clips into a YouTube-ready film: inventory, speech-to-text, an edit decision list, licensed music, burned-in subtitles, and a validated H.264 file. The clips can come from any camera or phone. GoPro chapter files are grouped with their proxy and thumbnail. Every other MP4, MOV, M4V, or MKV is its own clip.
 
 Two open-weight models run on this machine, both through MLX on an Apple GPU. Whisper, set under `[transcription]`, transcribes the clips. A second model, set under `[plan]`, reads those transcripts and writes `editorial/edit_plan.json`. The default plan model is Qwen2.5 7B Instruct at 4-bit, about 4 GB, from `mlx-community` on Hugging Face. The download is free. The project has no API key and does not call a paid chat service.
 

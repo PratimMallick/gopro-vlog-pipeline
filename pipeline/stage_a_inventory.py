@@ -1,17 +1,16 @@
-"""Stage A — media inventory of the Beach Trek folder (read-only on sources)."""
+"""Stage A — media inventory of the source folder (read-only on sources)."""
 from __future__ import annotations
 
 import csv
-import re
 import statistics
 from datetime import datetime
 from pathlib import Path
 
 from common import CFG, REPORTS, SOURCE_DIR, WORK, episode_dates, ffprobe_json, get_logger, read_json, write_json
 from gpmf import read_gps
+from media_names import classify_name
 
 log = get_logger("stage_a")
-NAME_RE = re.compile(r"^G([HXL]|OPR)(\d{2})?(\d{4})\.(MP4|LRV|THM|JPG)$", re.I)
 GPS_DIR = WORK / "gps"
 GPS_DIR.mkdir(exist_ok=True)
 
@@ -57,22 +56,26 @@ def main() -> None:
     groups: dict[str, dict] = {}
     photos, others = [], []
     for p in files:
-        m = NAME_RE.match(p.name)
-        if not m:
+        info = classify_name(p.name)
+        if info is None:
             others.append(str(p))
             continue
-        kind, chapter, num, ext = m.group(1).upper(), m.group(2) or "01", m.group(3), m.group(4).upper()
-        if ext == "JPG":
+        if info["kind"] == "photo":
             photos.append({"path": str(p), "file": p.name, "size_bytes": p.stat().st_size})
             continue
-        cid = f"C{num}_{chapter}"
-        g = groups.setdefault(cid, {"clip_id": cid, "file_number": num, "chapter": chapter})
-        if ext == "MP4":
+        cid = info["clip_id"]
+        if info["role"] == "master" and groups.get(cid, {}).get("master_path"):
+            n = 2
+            while groups.get(f"{cid}_{n}", {}).get("master_path"):
+                n += 1
+            cid = f"{cid}_{n}"
+        g = groups.setdefault(cid, {"clip_id": cid, "file_number": info["file_number"], "chapter": info["chapter"]})
+        if info["role"] == "master":
             g["master_path"] = str(p)
-            g["encoding"] = {"H": "H.264 (GH)", "X": "HEVC (GX)"}.get(kind, kind)
-        elif ext == "LRV":
+            g["encoding"] = info.get("encoding")
+        elif info["role"] == "proxy":
             g["proxy_path"] = str(p)
-        elif ext == "THM":
+        elif info["role"] == "thumb":
             g["thumb_path"] = str(p)
 
     cache = read_json(REPORTS / "clip_inventory.json", {}) or {}

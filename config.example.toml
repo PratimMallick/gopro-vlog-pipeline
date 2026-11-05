@@ -2,7 +2,7 @@
 # because it points at private footage.
 
 [paths]
-source_dir = "/path/to/your/gopro/folder"
+source_dir = "/path/to/your/video/folder"
 project_dir = "/path/to/this/episode"
 final_name = "My_Trip.mp4"
 # true = only files sitting directly in source_dir, not subfolders
