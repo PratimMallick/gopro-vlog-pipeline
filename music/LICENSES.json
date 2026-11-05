@@ -1,0 +1,18 @@
+{
+  "about": "All music is by Kevin MacLeod, downloaded from incompetech.com (royalty-free MP3 section) and licensed under Creative Commons Attribution 4.0. Attribution must appear in the YouTube description.",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "license_info": "https://incompetech.com/music/royalty-free/licenses/",
+  "content_id_note": "These tracks are registered with Content ID. If a claim appears, make sure the credit is in the description, then dispute the claim citing the CC BY license.",
+  "tracks": {
+    "Pamgaea":    {"file": "Pamgaea.mp3",    "title": "Pamgaea"},
+    "Easy_Lemon": {"file": "Easy_Lemon.mp3", "title": "Easy Lemon"},
+    "Wholesome":  {"file": "Wholesome.mp3",  "title": "Wholesome"},
+    "Hyperfun":   {"file": "Hyperfun.mp3",   "title": "Hyperfun"},
+    "Inspired":   {"file": "Inspired.mp3",   "title": "Inspired"},
+    "Carefree":   {"file": "Carefree.mp3",   "title": "Carefree"},
+    "Fretless":   {"file": "Fretless.mp3",   "title": "Fretless"},
+    "Heroic_Age": {"file": "Heroic_Age.mp3", "title": "Heroic Age", "used": false}
+  },
+  "credit_template": "\"{title}\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttps://creativecommons.org/licenses/by/4.0/"
+}

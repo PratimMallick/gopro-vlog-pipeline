@@ -1,0 +1,19 @@
+# Private episode outputs. The code, the example config, and the music
+# license notes are what get published. Footage, transcripts, and the
+# rendered film stay on this machine.
+
+config.toml
+work/
+logs/
+review/
+reports/
+editorial/edit_plan.json
+*.mp4
+*.srt
+*.jpg
+*.png
+music/*.mp3
+.venv/
+__pycache__/
+*.pyc
+.DS_Store

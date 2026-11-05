@@ -1,0 +1,52 @@
+# Copy to config.toml and fill in your own paths. config.toml is gitignored
+# because it points at private footage.
+
+[paths]
+source_dir = "/path/to/your/gopro/folder"
+project_dir = "/path/to/this/episode"
+final_name = "My_Trip.mp4"
+# true = only files sitting directly in source_dir, not subfolders
+top_level_only = false
+
+[episode]
+title = "MY TRIP"
+date_label = "1 JANUARY 2026"
+video_title = "My Trip - 1 January 2026"
+srt_basename = "My_Trip"
+# Embedded capture date. Other dates in the same folder are inventoried and then skipped.
+capture_date = "2026-01-01"
+# Optional. Set this to use more than one day in one film:
+# capture_dates = ["2026-01-01", "2026-01-02"]
+min_duration_s = 60
+max_duration_s = 900
+
+[analysis]
+frame_interval_s = 1.0
+analysis_width = 320
+scene_threshold = 0.45
+black_luma = 18
+min_segment_s = 1.5
+
+[transcription]
+model = "mlx-community/whisper-large-v3-mlx"
+min_speech_rms_db = -45
+initial_prompt = ""
+
+[render]
+width = 1920
+height = 1080
+fps = "30000/1001"
+crf = 18
+preset = "medium"
+x264_profile = "high"
+audio_rate = 48000
+target_lufs = -14.0
+true_peak = -1.5
+music_db_open = -6.0
+music_db_under_speech = -22.0
+music_db_ambient = -12.0
+
+[look]
+contrast = 1.04
+saturation = 1.06
+gamma = 1.0
